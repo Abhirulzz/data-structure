@@ -12,12 +12,12 @@ public class ChainOfResponsibilityDemo {
 		crystal.setSuccessor(jeff);
 		
 		Request request = new Request(RequestType.CONFERENCE, 500);
-		bryan.handleRequest(request);
+		jeff.handleRequest(request);
 		
 		request = new Request(RequestType.PURCHASE, 1000);
-		crystal.handleRequest(request);
+		jeff.handleRequest(request);
 		
 		request = new Request(RequestType.PURCHASE, 2000);
-		crystal.handleRequest(request);
+		jeff.handleRequest(request);
 	}
 }

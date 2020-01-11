@@ -140,7 +140,7 @@ public class LinkList {
              // Go to next node 
              currNode = currNode.next; 
          } 
-         currNode.next=p1;
+         //currNode.next=p1;
     	 return p1;                                                
     	 }          
     
@@ -175,6 +175,79 @@ public class LinkList {
     	 return f2;                                                        
     	 }                                                                 
    
+    Node findMid(Node head) {                
+    	Node f1 = head;                                          
+    	Node f2 = head;                                          
+    	int count=0; 
+    	int mid=0;
+    	// find meeting point                                              
+    	while (f2.next!= null) {                                          
+    	
+    	f1 = f1.next;   
+    	
+    	f2 = f2.next.next;                                                 
+    	  count++;                                                              
+    	 }   
+    	if(count%2 ==0)
+    	{
+    	                     
+    	 f2= f1.next;
+    	 mid=count ;
+		 count=count*2;
+    	 
+    	 
+    	}
+    	 else 
+    	 {
+    		 f2= f1;
+    		 mid=count+1;
+        	 count=count*2 +1;
+    	 }
+    	
+    	printMiddleToLeftRightUtil(head,mid,count);
+    	
+    /*	while(f2.next!=null)
+    	{
+    		System.out.println("alternate");
+    		f1.next=f2;
+    		f2.next=f1.next; 
+    	}*/
+    	return f2;
+    }
+    
+    
+    Node reverse(Node head,Node mid) 
+    { 
+       Node front = head;
+       Node back = mid; 
+       Node fut = null; 
+       Node prev = null; 
+         
+       int count = 0; 
+  
+       /* Reverse first k nodes of linked list */
+       while (front != null)  
+       { 
+          // fut = back; 
+           front.next = back; 
+           back.next=prev;
+           prev = front; 
+           //front = fut; 
+           count++; 
+       } 
+  
+       /* next is now a pointer to (k+1)th node  
+          Recursively call for the list starting from current. 
+          And make rest of the list as next of first node */
+       if (fut != null)  
+          head.next = reverse(front, back); 
+  
+       // prev is now head of input list 
+       return prev; 
+    }                       
+  
+    	                                                                
+   
     
     
     void remove_duplicates() { 
@@ -203,6 +276,120 @@ public class LinkList {
             ptr1 = ptr1.next; 
         } 
     } 
+    
+    static Node printMiddleToLeftRightUtil(Node head, 
+            int counter, int lSize) 
+{ 
+// Base Condition 
+// When size of list is odd 
+if (counter == 1 && lSize % 2 != 0) 
+{ 
+
+// Print node value 
+System.out.print( head.data); 
+
+// Returns address of next node 
+return head.next; 
+} 
+
+// Base Condition 
+// When size of list is even 
+else if (counter == 1) 
+{ 
+
+// Print node value 
+// and next node value 
+System.out.print(head.data); 
+System.out.print( " , " + head.next.data); 
+
+// Returns address of next to next node 
+return head.next.next; 
+} 
+else 
+{ 
+
+// Recursive function call and 
+// store return address 
+Node ptr = printMiddleToLeftRightUtil(head.next,  
+                      counter - 1, lSize); 
+
+// Print head data 
+System.out.print(" , " + head.data); 
+
+// Print ptr data 
+System.out.print(" , " + ptr.data); 
+
+// Returns address of next node 
+return ptr.next; 
+} 
+} 
+    
+    Node construct( Node p ) {
+        if( p == null )
+           return null; 
+        else {
+           p.next = construct( p.next );
+           return p; 
+        }
+     }  
+    
+    
+    Node reverserec(Node curr)
+    {
+    	Node first,rest;
+    	int count=0;
+    	//Node front=head;
+    	//Node front =null;
+    	count++;
+    	/*if (count==1)
+    	{
+    	front=head;	
+    	}
+    	else
+    	{
+    		if(curr !=null)
+    		{
+    	
+    		
+    		front=curr;
+    		}
+    	} */
+    	//empty list base case
+    	if (curr== null) {
+    		return head;
+    	}
+    	first=curr;
+    	rest=first.next;
+    	
+    	if(rest==null)
+    	{
+    		return head;
+    	}
+    	Node front=reverserec(rest);
+    	//int count=0;
+    	//Node front=head;
+    	//Node front =null;
+    	
+    	first.next.next=front.next;
+    	front.next=first.next;
+    	front=front.next.next;
+    	curr=front;
+    	if (front.next ==rest) {
+    		front.next=null;
+    		return head;
+    	}
+    	return curr;
+    	
+    	//Node ret = head;
+    	//curr=front;
+    	/*first.next.next=first;
+    	first.next=null;
+    	curr=rest; 
+    	return curr;*/
+    	
+    			
+    	
+    }
     
 	void deleteNode(Node n) {
 		if (n == null || n.next == null) {
@@ -234,17 +421,19 @@ public class LinkList {
         list = insert(list, 6); 
         list = insert(list, 7); 
         list = insert(list, 8); 
-        list = insert(list, 9); 
+        list = insert(list, 9);
+        list = insert(list, 10);
+        list = insert(list, 11);
         //list = insert(list, 5); 
         // Print the LinkedList 
-        list.insertAtMid();
+       // list.insertAtMid();
     //    list.printList(); 
     
         //list.remove_duplicates();
         // Print the LinkedList 
         //System.out.printf("%n");
       //  list.printList(); 
-        System.out.printf("%n");
+       // System.out.printf("%n");
         Node p1Node=null;
        // p1Node=list.head;
         //p1Node.data=6;
@@ -253,13 +442,22 @@ public class LinkList {
         //System.out.printf("%n");
         //p1Node=list.nthtolast(3);
         //p1Node.data.printList(); 
-        //System.out.println(p1Node.data);
+        System.out.printf("%n");
+  //      System.out.println(p1Node.data);
        
         //currNode.next=list.nthtolast(3);
-        p1Node=list.findbeginning();
+       // p1Node=list.findbeginning();
+       Node Pnode=list.findMid(list.head);
+        //list.head=list.reverse(list.head, 5);
+       
+       //list.head=list.reverse(list.head, p1Node);
         System.out.printf("%n");
-        System.out.println(p1Node.data);
-        //list.printList(); 
+        //System.out.println(p1Node.data);
+        
+       list.head=list.construct(list.head); 
+       list.printList();
+       list.head=list.reverserec(Pnode);
+        list.printList(); 
     } 
 
 }
