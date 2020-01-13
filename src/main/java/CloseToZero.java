@@ -37,7 +37,7 @@ public class CloseToZero {
 			sum2=sum*sum;
  
 			/*If abs(sum) is less than min sum, we need to update sum and pair */
-			if(Math.abs(sum2) >= Math.abs(minimumSum))
+			if(Math.abs(sum2) <= Math.abs(minimumSum))
 			{
 				
 				
@@ -63,7 +63,7 @@ public class CloseToZero {
 				
 			}
 			
-			if(sum > minimumSum)
+			if(sum < 0)
 				l++;
 			else
 				r--;
@@ -81,20 +81,35 @@ public class CloseToZero {
 	static int GetAnswer(int[] arr){
 	    int min = arr[0];
 	    int max = arr[0];
-	    int maxDistSum = 0;
-
+	    int maxSum = 0;
+	    Map<Integer, List<List<Integer>>> wordSet = new HashMap<>();
 	    for (int i = 1; i < arr.length; ++i)
 	    {
 	        int x = arr[i];
 	        List<List<Integer>> pair =new ArrayList();
-	        if(Math.abs(maxDistSum) < Math.abs(max+x)) maxDistSum = max+x;
-	        if(Math.abs(maxDistSum) < Math.abs(min+x)) maxDistSum = min+x;
+	        
+	        if(Math.abs(maxSum) < Math.abs(max+x)) {
+	        
+	        if(wordSet.get(maxSum)!=null)
+			{
+				List<Integer> close =new ArrayList();;
+				pair.addAll(wordSet.get(maxSum));
+				pair.add(Arrays.asList(arr[i],arr[i+1]));
+				wordSet.put(maxSum,pair);
+		}else
+		{
+			//wordSet.put(minimumSum, (Arrays.asList(arr[minLeft],arr[minRight])));
+			pair.add(Arrays.asList(arr[i],arr[i+1]));
+			wordSet.put(maxSum, pair);
+		}
+	        }
+	        if(Math.abs(maxSum) < Math.abs(x)) maxSum = min+x;
 
 	        if(x < min) min = x;
 	        if(x > max) max = x;
 	    }
 
-	    return maxDistSum;
+	    return maxSum;
 	}
 	public static void main(String[] args) 
 	{ 
@@ -109,7 +124,7 @@ public class CloseToZero {
         System.out.println(it.next());
     }	
 	
-	 System.out.println(GetAnswer(a));
+	 //System.out.println(GetAnswer(a));
 	}
 
 }
