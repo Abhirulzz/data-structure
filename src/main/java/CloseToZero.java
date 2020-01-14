@@ -15,8 +15,8 @@ public class CloseToZero {
 		//List<Integer> close =new ArrayList();
 		
 		Arrays.sort(arr);
-		int sum,sum2=0; 
-		int minimumSum = 0;
+		int sum=0; 
+		int minimumSum = Integer.MAX_VALUE;
 		int n=arr.length;
 		int count=0;
 		if(n<0)
@@ -34,14 +34,14 @@ public class CloseToZero {
 		{
 			List<List<Integer>> pair =new ArrayList();
 			sum = arr[l] + arr[r];
-			sum2=sum*sum;
+			//sum2=sum*sum;
  
 			/*If abs(sum) is less than min sum, we need to update sum and pair */
-			if(Math.abs(sum2) <= Math.abs(minimumSum))
+			if(Math.abs(sum) <= Math.abs(minimumSum))
 			{
 				
 				
-				minimumSum = sum2;
+				minimumSum = Math.abs(sum);
 				minLeft = l;
 				minRight = r;
 			
@@ -77,54 +77,18 @@ public class CloseToZero {
  
 		//System.out.println(" The pair whose sum is minimun : "+arr[minLeft]+" "+ arr[minRight]);
 	}
-	
-	static int GetAnswer(int[] arr){
-	    int min = arr[0];
-	    int max = arr[0];
-	    int maxSum = 0;
-	    Map<Integer, List<List<Integer>>> wordSet = new HashMap<>();
-	    for (int i = 1; i < arr.length; ++i)
-	    {
-	        int x = arr[i];
-	        List<List<Integer>> pair =new ArrayList();
-	        
-	        if(Math.abs(maxSum) < Math.abs(max+x)) {
-	        
-	        if(wordSet.get(maxSum)!=null)
-			{
-				List<Integer> close =new ArrayList();;
-				pair.addAll(wordSet.get(maxSum));
-				pair.add(Arrays.asList(arr[i],arr[i+1]));
-				wordSet.put(maxSum,pair);
-		}else
-		{
-			//wordSet.put(minimumSum, (Arrays.asList(arr[minLeft],arr[minRight])));
-			pair.add(Arrays.asList(arr[i],arr[i+1]));
-			wordSet.put(maxSum, pair);
-		}
-	        }
-	        if(Math.abs(maxSum) < Math.abs(x)) maxSum = min+x;
-
-	        if(x < min) min = x;
-	        if(x > max) max = x;
-	    }
-
-	    return maxSum;
-	}
 	public static void main(String[] args) 
 	{ 
 		//int a[] = {9, 7, 2, 4, 6, 8, 2, 1, 5}; 
-		int a[] = {3,-5,4,-2,10,11,12,-6,13,-12,-13}; 
+		int a[] = {3,-5,4,-2,10,11,-12}; 
 	
 	System.out.println("The pair whose sum is closest to zero");
 	//findPairWithMinSum(a);
 	List<List<Integer>> PalinList= findPairWithMinSum(a);
 	Iterator<List<Integer>> it = PalinList.iterator();
-    while (PalinList != null && it.hasNext()) {
+    while (it.hasNext()) {
         System.out.println(it.next());
     }	
-	
-	 //System.out.println(GetAnswer(a));
 	}
 
 }
